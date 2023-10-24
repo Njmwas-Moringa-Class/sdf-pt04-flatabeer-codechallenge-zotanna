@@ -1,38 +1,59 @@
-const apiHost = "http://localhost:3000";
+const APIURL = "http://localhost:3000";
 
-function getAndLoadAllBeers(){
-    fetch(`${apiHost}/beers`).then(resp=>resp.json()).then(beers=>{
-        document.getElementById('beer-list').innerHTML = beers
-        .map(beer=>`<li onClick="getAndLoadBeerDetails(${beer.id})">${beer.name}</li>`)
-        .join('');
-    })
+function updateBeerDetails(beer) {
+  document.getElementById("beer-name").innerHTML = beer.name;
+  document.getElementById("beer-image").src = beer.image_url;
+  document.getElementById("beer-description").innerHTML = beer.description;
+  const customerReviews = beer.reviews
+    .map((review) => `<li>${review}</li>`)
+    .join("");
+  document.getElementById("customer-reviews").innerHTML = customerReviews;
 }
 
-function getAndLoadBeerDetails(beerId){
-    fetch(`${apiHost}/beers/${beerId}`).then(resp=>resp.json()).then(beer=>{
-        console.log(beer);
-        document.getElementById('beer-name').innerHTML = beer.name;
-        document.getElementById('beer-image').src = beer.image_url;
-        document.getElementById('beer-description').innerHTML = beer.description;
-        document.getElementById('review-list').innerHTML = beer.reviews.map(review=>`<li>${review}</li>`).join('');
-    });
+function getBeerDetails(beerId) {
+  fetch(`${APIURL}/beers/${beerId}`)
+    .then((response) => response.json())
+    .then(updateBeerDetails)
+    .catch((err) => console.log(err));
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
-    getAndLoadAllBeers();
-    getAndLoadBeerDetails(1);
+function updateBeerList(beers) {
+  const beerList = beers
+    .map((beer) => `<li onclick="getBeerDetails(${beer.id})">${beer.name}</li>`)
+    .join("");
+  document.getElementById("beer-list").innerHTML = beerList;
+}
 
-    document.getElementById('description-form').addEventListener('submit', (evt)=>{
-        evt.preventDefault();
-        const form = evt.target;
-        document.getElementById('beer-description').innerHTML = form.description.value;
-        form.reset();
-    });
+function getBeers() {
+  fetch(`${APIURL}/beers`)
+    .then((response) => response.json())
+    .then(updateBeerList)
+    .catch((err) => console.log(err));
+}
 
-    document.getElementById('review-form').addEventListener('submit', evt=>{
-        evt.preventDefault();
-        const form = evt.target;
-        document.getElementById('review-list').innerHTML += `<li>${form.review.value}</li>`;
-        form.reset();
-    })
-})
+function updateBeerDescription(e) {
+  e.preventDefault();
+  const form = e.target;
+  document.getElementById("beer-description").innerHTML =
+    form.description.value;
+  form.reset();
+}
+
+function addReview(e) {
+  e.preventDefault();
+  const form = e.target;
+  document.getElementById(
+    "customer-reviews"
+  ).innerHTML += `<li>${form.review.value}</li>`;
+  form.reset();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  getBeers();
+  getBeerDetails(5);
+
+  document
+    .getElementById("description-form")
+    .addEventListener("submit", updateBeerDescription);
+  document.getElementById("review-form").addEventListener("submit", addReview);
+});

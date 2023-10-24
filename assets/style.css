@@ -1,0 +1,99 @@
+/* Reset default styles and define color variables */
+html,
+body,
+:root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Urbanist", sans-serif;
+  text-decoration: none;
+}
+
+:root {
+  --main-background: #f5f5f5;
+  --text-color: #333;
+  --link-color: #0077b6;
+  --button-background: #ff9900;
+  --button-text: #fff;
+}
+
+/* Set background color for the body */
+body {
+  background: var(--main-background);
+  color: var(--text-color);
+}
+
+/* Style the header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: var(--main-background);
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+nav ul {
+  display: flex;
+  cursor: pointer;
+}
+
+nav ul li {
+  margin-right: 20px;
+  font-size: 1.2rem;
+}
+
+/* Style the beer image */
+img#beer-image {
+  border: 2px solid #ddd;
+  box-shadow: 3px 3px 5px #888;
+}
+
+/* Style the form */
+.form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px #ccc;
+}
+
+.form label {
+  font-weight: bold;
+}
+
+.form textarea {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+/* Style the customer reviews section */
+.customer-reviews {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.customer-reviews li {
+  margin-bottom: 10px;
+  background-color: #ff9900;
+  padding: 12px 20px;
+  line-height: 1.5rem;
+  border-radius: 4px;
+}
+
+/* Style the buttons */
+.btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background-color: var(--button-background);
+  color: var(--button-text);
+  cursor: pointer;
+  width: fit-content;
+  margin: auto;
+  font-family: "Urbanist", sans-serif;
+}
